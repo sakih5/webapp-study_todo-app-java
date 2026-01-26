@@ -375,11 +375,58 @@ src/main/java/com/example/todoapp/
 
 ---
 
+## 追加作業: ID設計の検討
+
+### 議論内容
+
+Todoエンティティ作成に入る前に、主キーの設計について検討した。
+
+**選択肢**:
+| 方式 | 特徴 |
+|------|------|
+| Long + IDENTITY | DBが自動採番、シンプル、保守しやすい |
+| UUID | アプリ側で生成、推測不可、セキュリティ向上 |
+
+**検討ポイント**:
+
+1. **IDENTITYの連番はDB全体で共通**
+   - ユーザーごとの連番にはならない
+   - 「自分が100個目のTodoを作った」という用途には不向き
+
+2. **UUIDの保守性**
+   - デバッグ時にIDが長くてコピペ必須
+   - ログが読みにくくなる
+   - 時系列が分からない（ランダムなので）
+
+3. **PostgreSQLでのUUID生成**
+   - `gen_random_uuid()` 関数で生成可能
+   - テーブル定義でDEFAULT値として設定可能
+
+### 決定事項
+
+**混在方式を採用**:
+- **User**: UUID（セキュリティ重視、外部に露出するため）
+- **Todo**: Long + IDENTITY（保守しやすさ重視、Userに紐づくため）
+
+### 次回やること
+
+1. **Userエンティティの修正**
+   - `Long id` → `UUID id` に変更
+   - `GenerationType.IDENTITY` → `GenerationType.UUID` に変更
+   - getter/setterの型も変更
+   - DBテーブルの再作成（ddl-auto=create）
+
+2. **Todoエンティティの作成**
+   - Long + IDENTITY で主キー設定
+   - @ManyToOne でUserとのリレーション設定
+
+---
+
 ## 次回のタスク
 
 WBS 1.4: バックエンド Todo機能
 
-1. Todoエンティティ作成
+1. Todoエンティティ作成 ← 次はここから
 2. Todo作成API
 3. Todo一覧取得API
 4. Todo更新API
