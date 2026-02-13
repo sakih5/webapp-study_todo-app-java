@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Todoアプリ</title>
+<link rel="stylesheet" href="css/app.css" type="text/css">
+<meta name=”viewport” content="width=device-width,initial-scale=1">
+</head>
+<body>
+<h1>カテゴリー管理</h1>
+<p>登録済みのカテゴリー一覧です。</p>
+<a href="index.html">Todo一覧に戻る</a>
+<form id="category-form">
+    <div>
+        <label for="name">名前</label>
+        <input id="name" type="text" name="name" required>
+    </div>
+
+    <div>
+        <label for="color">色</label>
+        <input id="color" type="color" name="color">
+    </div>
+
+    <button type="submit">保存</button>
+</form>
+<div class="table-wrapper">
+    <table id="category-table">
+        <thead>
+            <tr>
+                <th>名前</th>
+                <th>色</th>
+                <th>編集</th>
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody id="category-list">
+            <!-- ここにJavaScriptでTodoを追加 -->
+        </tbody>
+    </table>
+</div>
+<script src="js/api.js"></script>
+<script src="js/category.js"></script>
+</body>
+</html>

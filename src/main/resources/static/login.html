@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Todoアプリ</title>
+<link rel="stylesheet" href="css/login.css" type="text/css">
+<meta name=”viewport” content="width=device-width,initial-scale=1">
+</head>
+<body>
+<h1>ログイン画面</h1>
+<p>Todoアプリのログイン画面です。</p>
+
+<form id="login-form">
+  <div>
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email" required>
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input id="password" type="password" name="password" required>
+  </div>
+
+  <button type="submit">Login</button>
+</form>
+
+<!-- エラーメッセージ表示エリア -->
+<div id="error-message" class="error" hidden>
+  エラーが発生しました
+</div>
+
+<a href="/signup.html">ユーザー登録はこちら</a>
+
+<script src="js/api.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

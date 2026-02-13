@@ -1,6 +1,5 @@
 package com.example.todoapp.service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.example.todoapp.util.JwtUtil;
@@ -36,17 +35,12 @@ public class UserService {
         // 2) パスワードをハッシュ化
         String hashedPassword = passwordEncoder.encode(rawPassword);
 
-        // 3) createdAt / updatedAt を現在時刻に設定
-        LocalDateTime now = LocalDateTime.now();
-
-        // 4) User を作って保存
+        // 3) User を作って保存
         User user = new User();
         user.setEmail(email);
         user.setPasswordHash(hashedPassword);
-        user.setCreatedAt(now);
-        user.setUpdatedAt(now);
 
-        // 5) 保存して返却
+        // 4) 保存して返却
         return userRepository.save(user);
     }
 
@@ -67,5 +61,11 @@ public class UserService {
 
         // 4. 認証成功 → JWTを生成して返す
         return jwtUtil.generateToken(email);
+    }
+
+    // メールアドレスでユーザーを検索
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
     }
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Todoアプリ</title>
+<link rel="stylesheet" href="css/app.css" type="text/css">
+<meta name=”viewport” content="width=device-width,initial-scale=1">
+</head>
+<body>
+<h1>My Todo一覧</h1>
+<p>登録済みのTodo一覧です。</p>
+<a href="category.html">カテゴリー管理画面へ</a>
+<button id="logout" type = 'button'>Logout</button>
+<form id="todo-form">
+    <div>
+        <label for="title">タイトル</label>
+        <input id="title" type="text" name="title" required>
+    </div>
+
+    <div>
+        <label for="description">説明</label>
+        <input id="description" type="text" name="description">
+    </div>
+
+    <div>
+        <label for="due">期限日</label>
+        <input id="due" type="date" name="due">
+    </div>
+
+    <div>
+        <label for="priority">優先度</label>
+        <select id="priority" name="priority">
+            <option value="">選択してください</option>
+            <option value="1">1 - 最低</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 - 最高</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="category">カテゴリー</label>
+        <select id="category" name="category" disabled>
+            <option id="loading-option">読み込み中...</option>
+        </select>
+    </div>
+
+    <button type="submit">保存</button>
+</form>
+<div class="table-wrapper">
+    <table id="todo-table">
+        <thead>
+            <tr>
+                <th>タイトル</th>
+                <th>詳細</th>
+                <th>カテゴリ</th>
+                <th>期限</th>
+                <th>優先度</th>
+                <th>完了</th>
+                <th>編集</th>
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody id="todo-list">
+            <!-- ここにJavaScriptでTodoを追加 -->
+        </tbody>
+    </table>
+</div>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

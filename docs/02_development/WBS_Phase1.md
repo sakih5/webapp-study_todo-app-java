@@ -337,72 +337,59 @@
 |----|---------|---------|---------|--------|------|
 | 1.4.1 | Todoエンティティ作成 | 2.7日 | 1.1.1, 1.3.2 | model/Todo.java | User, Categoryとのリレーション |
 | 1.4.2 | Todo作成API | 2.3日 | 1.4.1, 1.3.8 | POST /api/todos | JWT認証必須 |
-| 1.4.3 | Todo一覧取得API | 2.3日 | 1.4.1, 1.3.8 | GET /api/todos | 自分のTodoのみ |
-| 1.4.4 | Todo更新API | 1.6日 | 1.4.1, 1.3.8 | PUT /api/todos/{id} | 所有権チェック |
-| 1.4.5 | Todo削除API | 0.9日 | 1.4.1, 1.3.8 | DELETE /api/todos/{id} | 所有権チェック |
-| 1.4.6 | Todo完了切り替えAPI | 0.9日 | 1.4.1, 1.3.8 | PATCH /api/todos/{id}/complete | isCompleted切り替え |
-| 1.4.7 | フィルタリング機能 | 4.6日 | 1.4.3 | クエリパラメータ対応 | Specification使用★ |
+| 1.4.3 | Todo検索API | 2.3日 | 1.4.1, 1.3.8 | POST /api/todos/search | フィルタ・ソート対応 |
+| 1.4.4 | Todo更新API | 1.6日 | 1.4.1, 1.3.8 | PATCH /api/todos/{id} | 部分更新、完了切り替え含む |
+| 1.4.5 | Todo削除API | 0.9日 | 1.4.1, 1.3.8 | DELETE /api/todos/{id} | 論理削除、所有権チェック |
 
 **1.4.1 Todoエンティティ作成の詳細作業**
-- [ ] JPAエンティティ定義（Todo class）
-- [ ] フィールド定義（id, userId, categoryId, title, description, priority, dueDate, isCompleted, completedAt, createdAt, updatedAt）
-- [ ] アノテーション設定（@Entity, @ManyToOne等）
-- [ ] 外部キー制約（@JoinColumn: userId, categoryId）
-- [ ] TodoRepositoryインターフェース作成
-- [ ] テーブル作成確認
+- [x] JPAエンティティ定義（Todo class）★完了 2026-01-26
+- [x] フィールド定義（id, userId, categoryId, title, description, priority, due, isCompleted, deletedAt）★完了 2026-01-26
+- [x] アノテーション設定（@Entity, @ManyToOne等）★完了 2026-01-26
+- [x] 外部キー制約（@JoinColumn: userId, categoryId）★完了 2026-01-26
+- [x] TodoRepositoryインターフェース作成 ★完了 2026-01-26
+- [x] テーブル作成確認（PostgreSQLで構造確認）★完了 2026-01-26
 
 **1.4.2 Todo作成APIの詳細作業**
-- [ ] リクエストスキーマ（title, description, priority, due_date, category_id）
-- [ ] 認証チェック（current_userを取得）
-- [ ] データベース保存（user_idは認証ユーザー）
-- [ ] レスポンススキーマ（作成されたTodo情報）
-- [ ] バリデーション（title必須、priorityの値チェック）
-- [ ] Postmanでテスト
+- [x] リクエストスキーマ（TodoRequest: title, description, priority, due, category_id, is_completed）★完了 2026-01-29
+- [x] 認証チェック（current_userを取得）★完了 2026-01-30
+- [x] データベース保存（user_idは認証ユーザー）★完了 2026-01-30
+- [x] レスポンススキーマ（TodoResponse: 作成されたTodo情報）★完了 2026-01-29
+- [x] バリデーション（title必須、priorityの値チェック）★完了 2026-01-30
+- [x] curlでテスト ★完了 2026-01-30
 
-**1.4.3 Todo一覧取得APIの詳細作業**
-- [ ] 認証チェック
-- [ ] 自分のTodoのみ取得（WHERE user_id = current_user.id）
-- [ ] レスポンススキーマ（Todoのリスト）
-- [ ] ページネーション（オプション、Phase 1では不要かも）
-- [ ] Postmanでテスト
+**1.4.3 Todo検索APIの詳細作業（POST /api/todos/search）★難しい**
+- [x] 認証チェック ★完了 2026-02-01
+- [x] 自分のTodoのみ取得（WHERE user_id = current_user.id）★完了 2026-02-01
+- [x] リクエストスキーマ（TodoSearchRequest: status, category_id, priority, sort, order）★完了 2026-02-01
+- [x] レスポンススキーマ（Todoのリスト）★完了 2026-02-01
+- [x] Spring Data JPA Specificationの学習 ★完了 2026-02-01
+- [x] TodoSpecificationクラス作成 ★完了 2026-02-01
+- [x] status フィルタ実装（completed, incomplete, all）★完了 2026-02-01
+- [x] category_id フィルタ実装 ★完了 2026-02-01
+- [x] priority フィルタ実装（配列対応）★完了 2026-02-01
+- [x] Specificationの組み合わせ（and条件）★完了 2026-02-01
+- [x] ソート機能実装（Sort.by を使用）★完了 2026-02-01
+- [x] curlでテスト ★完了 2026-02-01
 
-**1.4.4 Todo更新APIの詳細作業**
-- [ ] 認証チェック
-- [ ] Todoの存在チェック
-- [ ] 所有権チェック（todo.user_id == current_user.id）
-- [ ] リクエストスキーマ（更新可能フィールド）
-- [ ] データベース更新
-- [ ] レスポンス
-- [ ] Postmanでテスト
+**1.4.4 Todo更新APIの詳細作業（PUT /api/todos/{id}）**
+- [x] 認証チェック ★完了 2026-01-30
+- [x] Todoの存在チェック ★完了 2026-01-30
+- [x] 所有権チェック（todo.user_id == current_user.id）★完了 2026-01-30
+- [x] リクエストスキーマ（TodoRequest使用）★完了 2026-01-30
+- [ ] 部分更新ロジック（指定されたフィールドのみ更新）← PATCHに変更時に対応
+- [ ] category_idのnull許可（カテゴリ解除）← 後で対応
+- [x] データベース更新 ★完了 2026-01-30
+- [x] レスポンス（更新後のTodo）★完了 2026-01-30
+- [x] curlでテスト ★完了 2026-01-30
 
 **1.4.5 Todo削除APIの詳細作業**
-- [ ] 認証チェック
-- [ ] Todoの存在チェック
-- [ ] 所有権チェック
-- [ ] データベースから削除
-- [ ] レスポンス（204 No Content）
-- [ ] Postmanでテスト
-
-**1.4.6 Todo完了切り替えAPIの詳細作業**
-- [ ] 認証チェック
-- [ ] Todoの存在・所有権チェック
-- [ ] is_completedを切り替え
-- [ ] completed_atを更新（完了時に現在時刻、未完了時にNULL）
-- [ ] レスポンス
-- [ ] Postmanでテスト
-
-**1.4.7 フィルタリング機能の詳細作業 ★難しい**
-- [ ] Spring Data JPA Specificationの学習
-- [ ] クエリパラメータ定義（status, category_id, priority, sort, order）
-- [ ] TodoSpecificationクラス作成
-- [ ] status フィルタ実装（completed, incomplete, all）
-- [ ] category_id フィルタ実装
-- [ ] priority フィルタ実装
-- [ ] Specificationの組み合わせ（and条件）
-- [ ] ソート機能実装（Sort.by を使用）
-- [ ] 複数フィルタの組み合わせテスト
-- [ ] Postmanでテスト
-- [ ] デバッグ（Java初心者は時間がかかる）
+- [x] 認証チェック ★完了 2026-01-30
+- [x] Todoの存在チェック ★完了 2026-01-30
+- [x] 所有権チェック ★完了 2026-01-30
+- [x] 論理削除（deleted_atに現在時刻を設定）★完了 2026-01-30
+- [x] レスポンス（204 No Content）★完了 2026-01-30
+- [ ] 冪等性確認（削除済みでも204を返す）← 後で対応
+- [x] curlでテスト ★完了 2026-01-30
 
 ---
 
@@ -415,26 +402,32 @@
 | 1.5.3 | TodoとCategoryの関連付け | 1.4日 | 1.4.1, 1.5.1 | リレーション確認 | Join取得のテスト |
 
 **1.5.1 Categoryエンティティ作成の詳細作業**
-- [ ] JPAエンティティ定義（Category class）
-- [ ] フィールド定義（id, userId, name, color, createdAt, updatedAt）
-- [ ] アノテーション設定（@Entity, @ManyToOne等）
-- [ ] 外部キー制約（@JoinColumn: userId）
-- [ ] CategoryRepositoryインターフェース作成
-- [ ] テーブル作成確認
+- [x] JPAエンティティ定義（Category class）★完了 2026-01-26
+- [x] フィールド定義（id, userId, name, color, deletedAt）★完了 2026-01-26
+- [x] アノテーション設定（@Entity, @ManyToOne等）★完了 2026-01-26
+- [x] 外部キー制約（@JoinColumn: userId）★完了 2026-01-26
+- [x] CategoryRepositoryインターフェース作成 ★完了 2026-01-26
+- [x] テーブル作成確認（PostgreSQLで構造確認）★完了 2026-01-26
 
 **1.5.2 Category CRUD APIの詳細作業**
-- [ ] POST /api/categories（作成）
-- [ ] GET /api/categories（一覧取得、自分のもののみ）
-- [ ] PUT /api/categories/{id}（更新、所有権チェック）
-- [ ] DELETE /api/categories/{id}（削除、所有権チェック）
-- [ ] リクエスト・レスポンススキーマ
-- [ ] Postmanでテスト
+- [x] CategoryRepositoryにexistsByUserAndNameメソッド追加 ★完了 2026-01-27
+- [x] CategoryService作成（create, findByUserメソッド完成）★完了 2026-01-27
+- [x] CategoryService完成（findById, update, deleteメソッド修正）★完了 2026-01-27
+- [x] リクエスト・レスポンススキーマ（CategoryRequest, CategoryResponse）★完了 2026-01-27
+- [x] UserServiceにfindByEmailメソッド追加 ★完了 2026-01-27
+- [x] CategoryController作成 ★完了 2026-01-27
+- [x] POST /api/categories（作成）★完了 2026-01-27
+- [x] GET /api/categories（一覧取得、自分のもののみ）★完了 2026-01-27
+- [x] PUT /api/categories/{id}（更新）★完了 2026-01-27
+- [x] DELETE /api/categories/{id}（削除）★完了 2026-01-27
+- [x] curlでテスト ★完了 2026-01-29
 
 **1.5.3 TodoとCategoryの関連付けの詳細作業**
-- [ ] Todo取得時にCategoryも含める（JOIN）
-- [ ] レスポンスにcategory情報を追加
-- [ ] Categoryが削除されたときのTodoの扱い（NULLにするか、削除を防ぐか）
-- [ ] テスト
+- [x] Todo取得時にCategoryも含める（JOIN）★完了 2026-02-01
+- [x] レスポンスにcategory情報を追加 ★完了 2026-02-01
+- [ ] Categoryが削除されたときのTodoの扱い（NULLにするか、削除を防ぐか）← 後で対応
+- [x] テスト ★完了 2026-02-01
+- [x] N+1問題対策（@EntityGraph使用）★完了 2026-02-01
 
 ---
 
@@ -451,78 +444,79 @@
 | 1.6.7 | レスポンシブ対応 | 0.7日 | 全画面 | CSSメディアクエリ | スマホ・タブレット対応 |
 
 **1.6.1 ログイン画面の詳細作業**
-- [ ] HTML作成（メールアドレス、パスワード入力フォーム）
-- [ ] CSS作成（シンプルで使いやすいデザイン）
-- [ ] JavaScript実装（フォーム送信処理）
-- [ ] /api/auth/login への fetch リクエスト
-- [ ] JWTトークンをlocalStorageに保存
-- [ ] ログイン成功後、Todo一覧画面へリダイレクト
-- [ ] エラーハンドリング（認証失敗時のメッセージ表示）
-- [ ] 動作確認
+- [x] HTML作成（メールアドレス、パスワード入力フォーム）★完了 2026-02-02
+- [x] CSS作成（シンプルで使いやすいデザイン）★完了 2026-02-12
+- [x] JavaScript実装（フォーム送信処理）★完了 2026-02-03
+- [x] /api/auth/login への fetch リクエスト ★完了 2026-02-02
+- [x] JWTトークンをlocalStorageに保存 ★完了 2026-02-03
+- [x] ログイン成功後、Todo一覧画面へリダイレクト ★完了 2026-02-03
+- [x] エラーハンドリング（認証失敗時のメッセージ表示）★完了 2026-02-03
+- [x] 動作確認 ★完了 2026-02-03
 
 **1.6.2 ユーザー登録画面の詳細作業**
-- [ ] HTML作成（メールアドレス、パスワード、パスワード確認）
-- [ ] CSS作成
-- [ ] JavaScript実装（フォーム送信処理）
-- [ ] バリデーション（パスワード一致チェック、メール形式）
-- [ ] /api/auth/register への fetch リクエスト
-- [ ] 登録成功後、ログイン画面へリダイレクト
-- [ ] エラーハンドリング（メール重複など）
-- [ ] 動作確認
+- [x] HTML作成（メールアドレス、パスワード、パスワード確認）★完了 2026-02-03
+- [x] CSS作成 ★完了 2026-02-12
+- [x] JavaScript実装（フォーム送信処理）★完了 2026-02-03
+- [x] バリデーション（パスワード一致チェック、メール形式）★完了 2026-02-03
+- [x] /api/auth/register への fetch リクエスト ★完了 2026-02-03
+- [x] 登録成功後、ログイン画面へリダイレクト ★完了 2026-02-03
+- [x] エラーハンドリング（メール重複など）★完了 2026-02-03
+- [x] 動作確認 ★完了 2026-02-03
 
 **1.6.3 Todo一覧画面の詳細作業**
-- [ ] HTML作成（ヘッダー、Todoリスト、フィルタ・ソートUI）
-- [ ] CSS作成（カード形式またはリスト形式）
-- [ ] JavaScript実装（Todo一覧取得、表示）
-- [ ] /api/todos への fetch リクエスト
-- [ ] 認証チェック（JWTがない場合、ログイン画面へ）
-- [ ] Todoの表示（タイトル、期限日、優先度、カテゴリー、完了チェックボックス）
+- [x] HTML作成（ヘッダー、Todoリスト、フィルタ・ソートUI）★完了 2026-02-03
+- [x] CSS作成（リスト形式）★完了 2026-02-12
+- [x] JavaScript実装（Todo一覧取得、表示）★完了 2026-02-03
+- [x] /api/todos/search への fetch リクエスト ★完了 2026-02-03
+- [x] 認証チェック（JWTがない場合、ログイン画面へ）★完了 2026-02-03
+- [x] Todoの表示（タイトル、期限日、優先度、カテゴリー）★完了 2026-02-03
 - [ ] フィルタUI（完了/未完了、カテゴリー、優先度）
 - [ ] ソートUI（期限日、作成日）
-- [ ] 完了チェックボックスのイベント（/api/todos/{id}/complete）
-- [ ] 削除ボタン（確認ダイアログ → /api/todos/{id} DELETE）
-- [ ] 動作確認
+- [x] 完了チェックボックスのイベント（PATCH /api/todos/{id}）★完了 2026-02-05
+- [x] 削除ボタン（確認ダイアログ → /api/todos/{id} DELETE）★完了 2026-02-03
+- [x] 動作確認 ★完了 2026-02-05
 
 **1.6.4 Todo作成・編集フォームの詳細作業**
-- [ ] HTML作成（モーダルまたは専用ページ）
-- [ ] フォーム項目（タイトル、説明、期限日、優先度、カテゴリー）
-- [ ] CSS作成
-- [ ] JavaScript実装（作成モード・編集モード）
-- [ ] 日付ピッカー（HTML5のdate inputまたはライブラリ）
-- [ ] カテゴリー選択（ドロップダウン、/api/categoriesから取得）
-- [ ] 優先度選択（高/中/低）
-- [ ] 作成時: POST /api/todos
-- [ ] 編集時: PUT /api/todos/{id}
-- [ ] バリデーション（タイトル必須）
-- [ ] 保存成功後、一覧画面を更新
-- [ ] 動作確認
+- [x] HTML作成（index.html内にフォーム配置）★完了 2026-02-05
+- [x] フォーム項目（タイトル、説明、期限日、優先度、カテゴリー）★完了 2026-02-05
+- [x] CSS作成 ★完了 2026-02-12
+- [x] JavaScript実装（作成モード・編集モード）★完了 2026-02-09
+- [x] 日付ピッカー（HTML5のdate input）★完了 2026-02-05
+- [x] カテゴリー選択（ドロップダウン、/api/categoriesから取得）★完了 2026-02-05
+- [x] 優先度選択（1〜5の整数、HTMLベタ打ち）★完了 2026-02-05
+- [x] 作成時: POST /api/todos ★完了 2026-02-05
+- [x] 編集時: PATCH /api/todos/{id} ★完了 2026-02-09
+- [x] バリデーション（タイトル必須、HTMLのrequired属性）★完了 2026-02-09
+- [x] 保存成功後、一覧画面を更新（window.location.reload）★完了 2026-02-05
+- [x] 動作確認 ★完了 2026-02-09
 
 **1.6.5 カテゴリー管理画面の詳細作業**
-- [ ] HTML作成（カテゴリー一覧、追加フォーム）
-- [ ] CSS作成
-- [ ] JavaScript実装
-- [ ] カテゴリー一覧表示（GET /api/categories）
-- [ ] カテゴリー追加フォーム（POST /api/categories）
-- [ ] カテゴリー編集（PUT /api/categories/{id}）
-- [ ] カテゴリー削除（DELETE /api/categories/{id}、確認ダイアログ）
+- [x] HTML作成（カテゴリー一覧、追加フォーム）★完了 2026-02-09
+- [x] CSS作成 ★完了 2026-02-12
+- [x] JavaScript実装 ★完了 2026-02-09
+- [x] カテゴリー一覧表示（GET /api/categories）★完了 2026-02-09
+- [x] カテゴリー追加フォーム（POST /api/categories）★完了 2026-02-09
+- [x] カテゴリー編集（PUT /api/categories/{id}）★完了 2026-02-09
+- [x] カテゴリー削除（DELETE /api/categories/{id}、確認ダイアログ）★完了 2026-02-09
+- [x] 論理削除済みカテゴリーの非表示対応（CategoryRepository修正）★完了 2026-02-09
 - [ ] 色選択（カラーピッカー）
-- [ ] 動作確認
+- [x] 動作確認 ★完了 2026-02-09
 
 **1.6.6 API連携（fetch処理）の詳細作業**
-- [ ] api.js 作成（共通fetch関数）
-- [ ] 認証ヘッダー自動付与（Authorization: Bearer {token}）
-- [ ] エラーハンドリング（401 Unauthorized → ログイン画面へ）
+- [x] api.js 作成（共通fetch関数: fetchWithAuth, getAuthToken）★完了 2026-02-12
+- [x] 認証ヘッダー自動付与（Authorization: Bearer {token}）★完了 2026-02-12
+- [x] エラーハンドリング（401 Unauthorized → ログイン画面へ）★完了 2026-02-12
+- [x] 204 No Content対応（response.json()を呼ばない）★完了 2026-02-12
 - [ ] 共通のエラー表示処理
-- [ ] GET, POST, PUT, DELETE のヘルパー関数
-- [ ] 全画面で api.js を使用するよう修正
-- [ ] 動作確認
+- [x] app.js で api.js を使用するよう修正 ★完了 2026-02-12
+- [x] category.js で api.js を使用するよう修正 ★完了 2026-02-12
+- [x] 動作確認（Todo CRUD、カテゴリー CRUD）★完了 2026-02-12
 
 **1.6.7 レスポンシブ対応の詳細作業**
-- [ ] メディアクエリ設定（スマホ: 〜768px, タブレット: 768〜1024px）
-- [ ] スマホ表示の調整（フォントサイズ、余白、ボタンサイズ）
-- [ ] タブレット表示の調整
-- [ ] ハンバーガーメニュー（必要に応じて）
-- [ ] 各画面で動作確認（Chrome DevToolsのデバイスモード）
+- [x] メディアクエリ設定（スマホ: 〜768px）★完了 2026-02-12
+- [x] スマホ表示の調整（フォントサイズ、余白、ボタンサイズ）★完了 2026-02-12
+- [x] テーブル横スクロール対応（table-wrapper + overflow-x: auto）★完了 2026-02-12
+- [x] 各画面で動作確認（Chrome DevToolsのデバイスモード）★完了 2026-02-12
 
 ---
 
@@ -534,37 +528,28 @@
 | 1.7.2 | バグ修正バッファ | 6.0日 | 1.7.1 | バグ修正コミット | Java初心者のため多め★ |
 
 **1.7.1 統合テスト（手動）の詳細作業**
-- [ ] テストシナリオ作成
+- [x] テストシナリオ作成 ★完了 2026-02-12
   - ユーザー登録 → ログイン → Todo作成 → 編集 → 完了 → 削除
   - カテゴリー作成 → Todoにカテゴリー設定 → フィルタリング
   - ログアウト → 再ログイン
-- [ ] 各シナリオを実行
-- [ ] 正常系のテスト
-- [ ] 異常系のテスト（無効なデータ、認証エラーなど）
+- [x] 各シナリオを実行 ★完了 2026-02-12
+- [x] 正常系のテスト ★完了 2026-02-12
+- [x] 異常系のテスト（無効なデータ、認証エラーなど）★完了 2026-02-12
 - [ ] エッジケースのテスト（空文字、非常に長い文字列など）
 - [ ] ブラウザ互換性テスト（Chrome, Firefox, Safari）
 - [ ] スマホ・タブレットでの動作確認
-- [ ] 発見したバグをリスト化
+- [x] 発見したバグをリスト化 ★完了 2026-02-12（5件発見）
 
 **1.7.2 バグ修正バッファの詳細作業（Java初心者向け）**
-- [ ] 発見したバグを優先順位付け
-- [ ] 重大なバグから修正
-- [ ] Java特有のエラー対応
-  - NullPointerException
-  - ClassCastException
-  - ConcurrentModificationException
-  - 型の不一致エラー
-- [ ] Spring Boot特有のエラー対応
-  - Bean定義エラー
-  - 循環依存エラー
-  - 設定ミス
-- [ ] JPA/Hibernate関連のエラー対応
-  - LazyInitializationException
-  - N+1問題
-  - SQLエラー
-- [ ] 修正後、再テスト
-- [ ] リグレッションテスト（他の機能が壊れていないか）
-- [ ] デバッグスキルの習得
+- [x] 発見したバグを優先順位付け ★完了 2026-02-12
+- [x] 重大なバグから修正 ★完了 2026-02-13（全5件修正）
+  - #1 完了チェックで詳細と期限が消える → TodoService.updateでnullフィールド上書き防止（2026-02-12）
+  - #2 削除したカテゴリがTodo一覧に表示される → CategoryService.deleteで該当Todoのcategoryをnullに（2026-02-13）
+  - #3 index.htmlにカテゴリー管理画面へのリンクが無い → リンク追加（2026-02-13）
+  - #4 index.htmlにログアウトボタンが無い → ボタン追加、JS処理追加（2026-02-13）
+  - #5 カテゴリー管理画面でカラーパレットが見えない → input type="color"に変更、CSS調整（2026-02-13）
+- [x] 修正後、再テスト ★完了 2026-02-13
+- [x] リグレッションテスト（他の機能が壊れていないか）★完了 2026-02-13
 
 ---
 
@@ -576,11 +561,11 @@
 | 1.8.2 | API仕様書確認 | 0.3日 | 全API | FastAPI自動生成ドキュメント | /docs で確認 |
 
 **1.8.1 README作成の詳細作業**
-- [ ] プロジェクト概要
-- [ ] 機能一覧
-- [ ] 技術スタック
-- [ ] セットアップ手順（環境構築、データベース作成、起動方法）
-- [ ] 使い方（スクリーンショット付き）
+- [x] プロジェクト概要 ★完了 2026-02-13
+- [x] 機能一覧 ★完了 2026-02-13
+- [x] 技術スタック ★完了 2026-02-13
+- [x] セットアップ手順（環境構築、データベース作成、起動方法）★完了 2026-02-13
+- [x] 使い方 ★完了 2026-02-13
 - [ ] 今後の予定（Phase 2, 3）
 - [ ] ライセンス
 
@@ -793,5 +778,5 @@ Phase 1完了後：
 ---
 
 **作成日**: 2025-12-14
-**最終更新**: 2026-01-25
-**バージョン**: 1.2
+**最終更新**: 2026-02-13
+**バージョン**: 1.8

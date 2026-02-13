@@ -1,0 +1,104 @@
+/* ===== ページ全体 ===== */
+body {
+    /* フォント指定（下の中から好きなものを使う） */
+    font-family: sans-serif;
+
+    /* 外側の余白 */
+    margin: 8px auto;
+
+    /* 内側の余白 */
+    padding: 0 8px;
+
+    /* ページの最大幅（広すぎると読みにくい） */
+    max-width: 800px;
+}
+
+form {
+    margin-bottom: 10px;      /* フォームと表の間に隙間 */
+}
+
+/* ===== テーブル ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #3e677a;
+    color: white;
+}
+
+/* ===== フォーム ===== */
+label {
+    display: block;          /* ラベルを1行に表示 */
+    font-weight: bold;       /* 太字 */
+    margin-bottom: 4px;      /* ラベルとinputの間に少し隙間 */
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+/* カラーのinputは、上記設定だとプレビュー部分が潰れて横線のように見えてしまうため、別途設定 */
+input[type="color"] {
+    width: 60px;
+    height: 40px;
+    padding: 2px;
+}
+
+/* ===== ボタン ===== */
+button[type="submit"] {
+    background-color: #0b406b;
+    color: white;
+    padding: 8px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #c5c5c5;
+    color: rgb(27, 27, 27);
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+/* ===== リンク ===== */
+a {
+    color: #2196F3;              /* リンクの文字色 */
+    text-decoration: none;       /* 下線を消す */
+}
+
+a:hover {
+    text-decoration: underline;  /* マウスを乗せたときだけ下線を表示 */
+}
+
+/* 画面幅が768px以下のとき（スマホ・小さいタブレット） */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;    /* 文字を少し小さく */
+    }
+
+    .table-wrapper {
+        overflow-x: auto;    /* 横にはみ出たら横スクロール */
+    }
+
+    button {
+        width: 100%;         /* 押しやすく */
+        padding:12px 16px;   /* 押しやすく */
+    }
+}

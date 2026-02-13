@@ -1,14 +1,14 @@
 package com.example.todoapp.controller;
 
-import com.example.todoapp.dto.LoginRequest;
-import com.example.todoapp.dto.LoginResponse;
-import com.example.todoapp.dto.UserResponse;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.*;
 
 import com.example.todoapp.entity.User;
 import com.example.todoapp.dto.SignupRequest;
+import com.example.todoapp.dto.UserResponse;
+import com.example.todoapp.dto.LoginRequest;
+import com.example.todoapp.dto.LoginResponse;
 import com.example.todoapp.service.UserService;
 
 @RestController

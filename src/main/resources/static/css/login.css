@@ -1,0 +1,72 @@
+/* ===== ページ全体 ===== */
+body {
+    /* フォント指定（下の中から好きなものを使う） */
+    font-family: sans-serif;
+
+    /* 外側の余白 */
+    margin: 8px auto;
+
+    /* 内側の余白 */
+    padding: 0 8px;
+
+    /* ページの最大幅（広すぎると読みにくい） */
+    max-width: 400px;
+}
+
+/* ===== フォーム ===== */
+label {
+    display: block;          /* ラベルを1行に表示 */
+    font-weight: bold;       /* 太字 */
+    margin-bottom: 4px;      /* ラベルとinputの間に少し隙間 */
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+/* ===== ボタン ===== */
+button[type="submit"] {
+    background-color: #0b406b;
+    color: white;
+    padding: 8px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ===== リンク ===== */
+a {
+    color: #2196F3;              /* リンクの文字色 */
+    text-decoration: none;       /* 下線を消す */
+}
+
+a:hover {
+    text-decoration: underline;  /* マウスを乗せたときだけ下線を表示 */
+}
+
+/* ===== エラーメッセージ ===== */
+.error {
+    color: #f44336;              /* 赤い文字 */
+    background-color: #ffeaea;   /* 薄い赤の背景 */
+    border: 1px solid #f44336;   /* 赤い枠線 */
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 16px;
+}
+
+/* 画面幅が768px以下のとき（スマホ・小さいタブレット） */
+@media (max-width: 768px) {
+    body {
+        padding: 0 16px;    /* 8px → 16px に増やす */
+    }
+
+    button {
+        width: 100%;         /* 押しやすく */
+        padding:12px 16px;   /* 押しやすく */
+    }
+}

@@ -42,6 +42,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/hello").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/login.html").permitAll()
+                        .requestMatchers("/signup.html").permitAll()
+                        .requestMatchers("/index.html").permitAll()
+                        .requestMatchers("/category.html").permitAll()
+                        .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/js/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(),
